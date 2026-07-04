@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-body: var(--font-outfit), "Outfit", system-ui, sans-serif;
+
+  /* Text colors follow the current era world (light worlds → dark ink,
+     dark worlds → light ink). Defaults below are the Lover world. */
+  --color-ink: var(--era-ink);
+  --color-ink-soft: var(--era-ink-soft);
+}
+
+:root {
+  /* Era world variables — rewritten at runtime by the era store.
+     Defaults: Lover (also what the gift + 404 pages render in). */
+  --era-accent: #ec5f9f;
+  --era-accent-rgb: 236, 95, 159;
+  --era-accent-soft: #f8c1da;
+  --era-ink: #57406b;
+  --era-ink-rgb: 87, 64, 107;
+  --era-ink-soft: #8a72a3;
+  --era-glass-bg: rgba(255, 255, 255, 0.42);
+  --era-glass-border: rgba(255, 255, 255, 0.65);
+  --era-bg: #f6c8dd;
+  --era-title-gradient: linear-gradient(100deg, #e75c9d 5%, #9d7bdd 50%, #d9a441 95%);
+  --era-title-glow: rgba(236, 95, 159, 0.45);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--era-ink);
+  background: var(--era-bg);
+  transition:
+    background-color 1100ms ease,
+    color 900ms ease;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* ---------------------------------------------------------------- */
+/* Cinematic era title: gradient fill + soft bloom behind the glyphs */
+/* ---------------------------------------------------------------- */
+.text-dreamy,
+.era-title {
+  background: var(--era-title-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 26px var(--era-title-glow))
+    drop-shadow(0 2px 14px rgba(0, 0, 0, 0.12));
+}
+
+/* ------------------------------------------------------------- */
+/* Frosted glass — chemistry changes per world (bright vs. noir). */
+/* ------------------------------------------------------------- */
+.glass {
+  background: var(--era-glass-bg);
+  backdrop-filter: blur(20px) saturate(1.35);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+  border: 1px solid var(--era-glass-border);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition:
+    background-color 900ms ease,
+    border-color 900ms ease;
+}
+:root[data-era-dark="false"] .glass {
+  box-shadow:
+    0 8px 32px rgba(120, 90, 160, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+:focus-visible {
+  outline: 3px solid var(--era-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(var(--era-accent-rgb), 0.3);
+}
+
+.scroll-soft::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-soft::-webkit-scrollbar-thumb {
+  background: rgba(var(--era-accent-rgb), 0.35);
+  border-radius: 8px;
+}
+
+/* ------------------------------------------------ */
+/* Ambient motion: clouds, rays, hero sway, floating */
+/* ------------------------------------------------ */
+@keyframes drift-a {
+  0% { transform: translate3d(-4%, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, -3%, 0) scale(1.06); }
+  100% { transform: translate3d(-4%, 0, 0) scale(1); }
+}
+@keyframes drift-b {
+  0% { transform: translate3d(3%, 2%, 0) scale(1.04); }
+  50% { transform: translate3d(-4%, -2%, 0) scale(1); }
+  100% { transform: translate3d(3%, 2%, 0) scale(1.04); }
+}
+@keyframes drift-c {
+  0% { transform: translate3d(0, 3%, 0) scale(1); }
+  50% { transform: translate3d(-3%, -3%, 0) scale(1.08); }
+  100% { transform: translate3d(0, 3%, 0) scale(1); }
+}
+.cloud-a { animation: drift-a 46s ease-in-out infinite; }
+.cloud-b { animation: drift-b 58s ease-in-out infinite; }
+.cloud-c { animation: drift-c 70s ease-in-out infinite; }
+
+/* light rays fanning from above, gently breathing */
+@keyframes ray-breathe {
+  0%, 100% { opacity: 0.55; transform: rotate(var(--ray-angle, 0deg)) scaleY(1); }
+  50% { opacity: 1; transform: rotate(calc(var(--ray-angle, 0deg) + 1.6deg)) scaleY(1.05); }
+}
+.light-ray {
+  animation: ray-breathe var(--ray-dur, 9s) ease-in-out infinite;
+  transform-origin: top center;
+  will-change: transform, opacity;
+}
+
+/* giant Taylor: slow breathing sway, never a hard edge */
+@keyframes hero-sway {
+  0%, 100% { transform: translateY(0) rotate(-0.4deg); }
+  50% { transform: translateY(-12px) rotate(0.4deg); }
+}
+.hero-sway {
+  animation: hero-sway 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* the centered album hovers weightlessly */
+@keyframes center-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.center-float {
+  animation: center-float 5.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes float-heart {
+  0% { transform: translateY(104vh) scale(0.7); opacity: 0; }
+  12% { opacity: 0.65; }
+  100% { transform: translateY(-12vh) scale(1.1); opacity: 0; }
+}
+.floating-heart {
+  animation: float-heart linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud-a, .cloud-b, .cloud-c, .hero-sway, .center-float,
+  .light-ray, .floating-heart {
+    animation: none !important;
+  }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
