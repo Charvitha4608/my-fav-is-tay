@@ -1,94 +1,73 @@
-# my fav is tay 💌 — How to Run on Your PC
+# my fav is tay 💌 — how to run
 
-A Taylor Swift playlist-gift web app. Single file, no install, no build step.
+A personal, non-commercial Taylor Swift fan gift. Twelve eras, each with Taylor
+floating behind a 3D album coverflow, her own backdrop, and her own particle
+effect. Pick songs from any album, add a note, and share a link that opens as a
+little gift.
 
----
+## ▶️ The easy way (recommended — full experience)
 
-## Quickest way (10 seconds)
+The background-removal (the figure cutouts) and the live album art need the page
+to be served over `http://`, not opened straight off the disk. It's one command.
 
-1. Unzip this folder anywhere (Desktop is fine).
-2. Open the folder `my-fav-is-tay`.
-3. Double-click **index.html** — it opens in your browser. That's it.
+1. Make sure you have Python (most computers do).
+2. Open a terminal **in this folder** and run:
 
-Real album artwork loads from the iTunes API, so it looks best **with
-internet on**. Offline, the designed gradient covers show instead.
+   ```
+   python3 -m http.server 8000
+   ```
 
----
+   (On Windows, if that doesn't work, try `py -m http.server 8000`.)
 
-## Better way (local server — recommended)
+3. Open your browser to:  **http://localhost:8000**
 
-Opening via double-click works, but a tiny local server behaves more like
-a real website (and avoids any browser file:// quirks).
+That's it. Leave the terminal open while you use it.
 
-**If you have Python (Fedora has it by default):**
-```bash
-cd my-fav-is-tay
-python3 -m http.server 8000
-```
-Then open http://localhost:8000 in your browser.
+### First load takes ~30–60 seconds
+The very first time, the app "peels the stickers" — it removes the backgrounds
+from all twelve photos right in your browser and caches them. After that, every
+load is instant. You'll see a little progress bar while it works.
 
-**If you prefer Node:**
-```bash
-cd my-fav-is-tay
-npx serve .
-```
-Then open the URL it prints (usually http://localhost:3000).
+> Needs an internet connection on first run (to fetch the cutout tool and the
+> official album covers). Everything is cached afterward.
 
-**VS Code:** install the "Live Server" extension → right-click
-index.html → "Open with Live Server".
+## 🖱️ The lazy way (quick peek)
 
----
+You can also just double-click `index.html`. It will open and mostly work —
+backdrops, carousel, album views, playlist, and sharing all run — but some
+browsers block the in-browser cutout tool on double-clicked files, so Taylor may
+appear as a soft-edged photo instead of a clean cutout. Use the server method
+above for the real thing.
 
-## How to use the app
+## 💾 Want picture-perfect cutouts?
 
-| Action | How |
-|---|---|
-| Browse eras | Swipe left/right (touch) · move cursor to screen edges or use ← → keys (desktop) |
-| Open an album | Tap/click the centered album (or press Enter) |
-| Add a song | Tap a song card — it hearts and flies into the dock |
-| Play a song | Tap "Spotify" or "YT" on any card |
-| Build the gift | Tap the dock (bottom bar) → "Create gift" → name it + write a message |
-| Preview the gift | "Wrap it up 🎀" → tap the envelope to unwrap (sparkles + typed message) |
+The in-browser removal is good, but if you want flawless edges (the star-crown on
+Showgirl, the seated Midnights shot, etc.), you can drop in your own:
 
-Your selections auto-save in the browser, so refreshing keeps your playlist.
+1. Run any of the twelve `assets/figures-raw/<name>.jpg` photos through a remover
+   like **remove.bg** (or Photoshop).
+2. Save each result as a transparent **PNG** into the `assets/figures/` folder,
+   using the exact same name: `debut.png`, `fearless.png`, `speaknow.png`,
+   `red.png`, `1989.png`, `reputation.png`, `lover.png`, `folklore.png`,
+   `evermore.png`, `midnights.png`, `ttpd.png`, `showgirl.png`.
 
----
+The app automatically prefers those over its own removal. No code changes needed.
 
-## What's inside
+## A few honest notes
 
-```
-my-fav-is-tay/
-├── index.html              ← THE app (Lavender Haze final version)
-├── HOW_TO_RUN.md           ← this file
-└── alternates/
-    ├── v3-dark-space.html      (earlier dark cinematic version)
-    └── v2-light-lavender.html  (earlier light pastel version)
-```
+- **Play links**: each song's Spotify and YouTube buttons open a *search* for that
+  song, so nothing ever breaks or points to the wrong thing. (The full Next.js
+  version can embed exact Spotify tracks with real previews once it's wired to a
+  Spotify account.)
+- **Track times** are approximate placeholders. Exact durations also come from the
+  Spotify version.
+- **Tracklists** are the standard editions of each album — not every vault track.
+  You can add more inside the `ERAS` list near the top of `index.html`.
+- **Sharing**: in this self-contained version the whole gift travels *inside the
+  link* (no server or database needed), so a shared link works for anyone, forever.
 
-Everything is one self-contained HTML file — all CSS and JavaScript inline.
-Fonts load from Google Fonts and artwork from Apple's iTunes API at runtime;
-nothing copyrighted is stored in the files.
-
----
-
-## Notes & troubleshooting
-
-- **Album covers not showing?** Check your internet connection — artwork is
-  fetched live from itunes.apple.com. The app still works fully without it.
-- **Animations feel heavy?** The particle river caps itself based on screen
-  size, and fully respects your OS "reduce motion" setting.
-- **Want to edit songs/colors?** Open index.html in VS Code — the `ALBUMS`
-  array near the top of the `<script>` holds every era: colors (`g`, `glow`),
-  and tracklists (`s`). Durations are approximate; the future Next.js version
-  pulls exact data from the Spotify API.
-
----
-
-## Legal note (important since you may publish this)
-
-This is an unofficial, non-commercial fan project. It never hosts audio,
-video, or images — playback is via official Spotify/YouTube links and
-artwork is loaded live from Apple's public iTunes API. If you publish it,
-keep it ad-free and keep the footer disclaimer intact.
-
-Made with 🤍 — now go make someone's day.
+## Legal
+Unofficial, non-commercial fan project. Not affiliated with, endorsed by, or
+sponsored by Taylor Swift, her team, or her labels. All music, artwork, images,
+and trademarks belong to their respective owners. Album covers are fetched live
+from the iTunes Search API and are not redistributed in this package.

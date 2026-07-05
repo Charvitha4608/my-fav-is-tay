@@ -1,0 +1,1 @@
+Drop your own transparent PNG cutouts here (debut.png, fearless.png, speaknow.png, red.png, 1989.png, reputation.png, lover.png, folklore.png, evermore.png, midnights.png, ttpd.png, showgirl.png). The app will use them automatically.
