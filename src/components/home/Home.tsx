@@ -13,6 +13,7 @@ import { PlaylistDock } from "@/components/dock/PlaylistDock";
 import { FlightLayer } from "@/components/album/FlightLayer";
 import { EraWorld } from "@/components/world/EraWorld";
 import { TaylorHero } from "@/components/world/TaylorHero";
+import { CelebrationIntro } from "@/components/intro/CelebrationIntro";
 
 const TAKEDOWN_EMAIL =
   process.env.NEXT_PUBLIC_TAKEDOWN_EMAIL ?? "kyra18710@gmail.com";
@@ -28,6 +29,7 @@ export function Home({ initialArt }: { initialArt: Record<string, string> }) {
   const art = useMemo(() => ({ ...clientArt, ...initialArt }), [clientArt, initialArt]);
   const [openAlbum, setOpenAlbum] = useState<Album | null>(null);
   const [current, setCurrent] = useState(0);
+  const [showIntro, setShowIntro] = useState(true);
   const reduced = usePrefersReducedMotion();
 
   const album = ALBUMS[current];
@@ -35,6 +37,10 @@ export function Home({ initialArt }: { initialArt: Record<string, string> }) {
 
   return (
     <main className="fixed inset-0 overflow-hidden">
+      <AnimatePresence>
+        {showIntro && <CelebrationIntro onCelebrate={() => setShowIntro(false)} />}
+      </AnimatePresence>
+
       <EraWorld />
       <LayoutGroup>
         {/* Taylor — the heart of the scene, behind everything interactive */}
@@ -81,7 +87,17 @@ export function Home({ initialArt }: { initialArt: Record<string, string> }) {
           }
           className="absolute inset-x-0 bottom-0 z-20 pb-5 sm:pb-7"
         >
-          <div className="relative mb-1 h-[clamp(5.5rem,16vh,9rem)] px-4">
+          <div
+            className="relative z-10 h-[clamp(5.5rem,16vh,9rem)] px-4"
+            style={{
+              // The floating center cover can grow taller than the coverflow's
+              // own box on short viewports (its size is width/vw-bound, the
+              // box is height/vh-bound) — reserve enough clearance below the
+              // title so it can never rise up into it.
+              marginBottom:
+                "max(0.75rem, calc((min(46vw,250px) * 1.16 - min(42vh,360px)) / 2 + 22px))",
+            }}
+          >
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={world.id}
@@ -99,10 +115,19 @@ export function Home({ initialArt }: { initialArt: Record<string, string> }) {
                 transition={{ duration: reduced ? 0 : 0.8, ease: [0.3, 0.1, 0.2, 1] }}
                 className="absolute inset-x-0 bottom-0 text-center"
               >
-                <h1 className="era-title font-display mx-auto max-w-[94vw] truncate text-[clamp(2.4rem,6.5vw,4.8rem)] italic leading-[1.05]">
+                {/* scrim so the title stays legible over bright or busy world backgrounds */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -inset-y-3 inset-x-[8%] -z-10 rounded-[32px]"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 60% 100% at 50% 58%, rgba(0,0,0,0.34), transparent 75%)",
+                  }}
+                />
+                <h1 className="era-title font-display relative mx-auto max-w-[94vw] truncate text-[clamp(2.4rem,min(6.5vw,8vh),4.8rem)] italic leading-[1.05]">
                   {world.label}
                 </h1>
-                <p className="mt-1 text-[11px] tracking-[0.35em] text-ink-soft uppercase">
+                <p className="relative mt-1.5 text-[11px] tracking-[0.35em] text-ink-soft uppercase [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
                   {album.year} · {world.caption}
                 </p>
               </motion.div>

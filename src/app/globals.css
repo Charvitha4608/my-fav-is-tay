@@ -3,6 +3,7 @@
 @theme inline {
   --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
   --font-body: var(--font-outfit), "Outfit", system-ui, sans-serif;
+  --font-script: var(--font-caveat), "Caveat", cursive;
 
   /* Text colors follow the current era world (light worlds → dark ink,
      dark worlds → light ink). Defaults below are the Lover world. */
@@ -43,6 +44,10 @@ body {
 
 .font-display {
   font-family: var(--font-display);
+}
+
+.font-script {
+  font-family: var(--font-script);
 }
 
 /* ---------------------------------------------------------------- */
@@ -169,5 +174,80 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ================================================================== */
+/* Envelope-letter gift reveal (/s/[shortId]) — its own fixed romantic */
+/* palette (blush / lipstick red / ivory), independent of the era world */
+/* so the reveal always reads the same regardless of which songs it holds. */
+/* ================================================================== */
+.envelope-scene {
+  --kiss-red: #d81b4f;
+  --kiss-red-deep: #7c0f2c;
+  --kiss-glow: rgba(216, 27, 79, 0.5);
+  --blush: #ffd9e4;
+  --blush-deep: #ffabc6;
+  --ivory: #fffaf3;
+  --ivory-deep: #f8e9db;
+  --ink-plum: #4a222f;
+  --ink-soft-plum: #93677a;
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 60% at 50% -8%, #fff3f6 0%, transparent 62%),
+    linear-gradient(180deg, #ffe6ee 0%, #ffd2e1 42%, #ffb8cf 100%);
+}
+
+/* subtle fractal-noise paper grain, tinted by whatever it's layered on.
+   Position is left to the caller's own utility classes (Tailwind's layered
+   `.absolute`/`.relative` would otherwise lose to this unlayered rule in
+   the cascade). */
+.paper-grain {
+  isolation: isolate;
+}
+.paper-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* the seal's quiet "come find me" breathing halo */
+@keyframes kiss-halo {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.22); opacity: 0.05; }
+}
+.kiss-halo {
+  animation: kiss-halo 2.4s ease-in-out infinite;
+}
+
+/* "kiss to open" caption, gently pulsing so it's discoverable but quiet */
+@keyframes kiss-hint {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+}
+.kiss-hint {
+  animation: kiss-hint 2.4s ease-in-out infinite;
+}
+
+/* scattered background kiss prints drifting behind the letter's text */
+@keyframes kiss-drift {
+  0%, 100% { transform: translate(0, 0) rotate(var(--kr, 0deg)) scale(var(--ks, 1)); }
+  50% { transform: translate(0, -8px) rotate(calc(var(--kr, 0deg) + 3deg)) scale(var(--ks, 1)); }
+}
+.kiss-print {
+  animation: kiss-drift var(--kd, 10s) ease-in-out infinite;
+  animation-delay: var(--kdelay, 0s);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kiss-halo, .kiss-hint, .kiss-print {
+    animation: none !important;
   }
 }

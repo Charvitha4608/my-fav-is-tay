@@ -11,10 +11,12 @@ export function TypedMessage({
   text,
   start,
   onDone,
+  className = "font-display whitespace-pre-wrap text-xl italic leading-relaxed text-ink sm:text-2xl",
 }: {
   text: string;
   start: boolean;
   onDone?: () => void;
+  className?: string;
 }) {
   const reduced = usePrefersReducedMotion();
   const [shown, setShown] = useState(0);
@@ -44,7 +46,7 @@ export function TypedMessage({
   }, [start, text, reduced, onDone]);
 
   return (
-    <p className="font-display whitespace-pre-wrap text-xl italic leading-relaxed text-ink sm:text-2xl">
+    <p className={className}>
       {text.slice(0, shown)}
       {start && shown < text.length && (
         <span className="ml-0.5 inline-block w-[2px] animate-pulse bg-[var(--era-accent)]" aria-hidden>

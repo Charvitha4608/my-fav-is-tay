@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Outfit } from "next/font/google";
+import { Fraunces, Outfit, Caveat } from "next/font/google";
 import "./globals.css";
 import { CookieBanner } from "@/components/site/CookieBanner";
 
@@ -12,6 +12,13 @@ const fraunces = Fraunces({
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+});
+
+// Handwritten script for the gift-reveal love letter's personal note + signature.
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-caveat",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +38,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${outfit.variable} ${caveat.variable}`}>
       {/* EraWorld is rendered by each page (not here) so it shares one
           module graph — and one era store — with the page's controls. */}
       <body className="min-h-screen antialiased">

@@ -235,7 +235,7 @@ export function PlaylistDock() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="name this playlist (e.g. songs that are so us)"
                     maxLength={120}
-                    className="w-full rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/70 focus:outline-none"
+                    className="w-full rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-sm text-[#2b1f3d] placeholder:text-[#2b1f3d]/50 focus:outline-none"
                   />
                   <textarea
                     value={message}
@@ -243,14 +243,14 @@ export function PlaylistDock() {
                     placeholder="write them a little letter…"
                     rows={3}
                     maxLength={2000}
-                    className="w-full resize-none rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/70 focus:outline-none"
+                    className="w-full resize-none rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-sm text-[#2b1f3d] placeholder:text-[#2b1f3d]/50 focus:outline-none"
                   />
                   <input
                     value={from}
                     onChange={(e) => setFrom(e.target.value)}
                     placeholder="from (optional)"
                     maxLength={80}
-                    className="w-full rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/70 focus:outline-none"
+                    className="w-full rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-sm text-[#2b1f3d] placeholder:text-[#2b1f3d]/50 focus:outline-none"
                   />
                   {error && <p className="text-xs text-red-500">{error}</p>}
                   <button

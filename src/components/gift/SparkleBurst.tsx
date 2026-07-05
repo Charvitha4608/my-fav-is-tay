@@ -17,7 +17,7 @@ export function SparkleBurst({ fire }: { fire: boolean }) {
     }
   }, [fire, reduced]);
 
-  const glyphs = ["✨", "💗", "🤍", "💛", "💜", "⭐"];
+  const glyphs = ["💋", "✨", "💗", "🩷"];
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[70]" aria-hidden>

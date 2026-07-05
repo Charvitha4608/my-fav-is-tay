@@ -6,7 +6,6 @@ import { resolveAllArt } from "@/lib/art";
 import { enrichTracks } from "@/lib/spotify/resolve";
 import { GiftView } from "@/components/gift/GiftView";
 import { Footer } from "@/components/site/Footer";
-import { EraWorld } from "@/components/world/EraWorld";
 
 export const dynamic = "force-dynamic";
 
@@ -51,7 +50,6 @@ export default async function SharePage({ params }: Props) {
 
   return (
     <>
-      <EraWorld />
       <GiftView share={share} tracks={tracks} art={art} />
       <Footer />
     </>
