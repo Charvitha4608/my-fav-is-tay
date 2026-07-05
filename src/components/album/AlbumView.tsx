@@ -66,7 +66,7 @@ export function AlbumView({
       {/* this era's figure, full-bleed behind the page, under a scrim so
           the tracklist and titles stay readable */}
       <div className="absolute inset-0 overflow-hidden">
-        <EraBackdrop eraId={album.eraId} className="scale-[1.03]" />
+        <EraBackdrop eraId={album.eraId} />
         <div
           className="absolute inset-0"
           style={{

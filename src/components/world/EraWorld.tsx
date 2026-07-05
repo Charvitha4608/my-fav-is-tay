@@ -89,13 +89,10 @@ export function EraWorld() {
           style={{ background: world.sky, willChange: "transform, opacity" }}
         >
           {/* the era's photographic backdrop, dissolved into the sky.
-              A gentle blur + the grade above keep the small source images
-              atmospheric rather than pixelated, and keep text readable. */}
+              It blur-fills internally (whole photo over its own glow), so
+              here it only needs to sit translucent under the grade. */}
           <div className="absolute inset-0 overflow-hidden">
-            <EraBackdrop
-              eraId={world.id}
-              className="scale-[1.06] opacity-60 blur-[2px]"
-            />
+            <EraBackdrop eraId={world.id} className="opacity-65" />
             {/* seat the lower third so the coverflow + title sit on calm ground */}
             <div
               className="absolute inset-0"
