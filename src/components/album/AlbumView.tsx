@@ -8,6 +8,7 @@ import { eraFor } from "@/lib/eras";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { TrackCard } from "./TrackCard";
 import { CoverArt } from "@/components/carousel/AlbumCard";
+import { EraBackdrop } from "@/components/world/EraBackdrop";
 
 /**
  * Opening an album is opening a storybook — never a popup. The cover
@@ -61,6 +62,20 @@ export function AlbumView({
           background: world.dark ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.14)",
         }}
       />
+
+      {/* this era's figure, full-bleed behind the page, under a scrim so
+          the tracklist and titles stay readable */}
+      <div className="absolute inset-0 overflow-hidden">
+        <EraBackdrop eraId={album.eraId} className="scale-[1.03]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: world.dark
+              ? "linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.58) 45%, rgba(0,0,0,0.72) 100%)"
+              : "linear-gradient(to bottom, rgba(255,255,255,0.46) 0%, rgba(255,255,255,0.62) 45%, rgba(255,255,255,0.78) 100%)",
+          }}
+        />
+      </div>
 
       {/* the cover, landed in the corner (flies here via shared layout) */}
       <motion.div

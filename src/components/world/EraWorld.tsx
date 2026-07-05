@@ -6,6 +6,7 @@ import { eraFor } from "@/lib/eras";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { useMouseParallax } from "@/lib/hooks/useMouseParallax";
 import { ParticleField } from "./ParticleField";
+import { EraBackdrop } from "./EraBackdrop";
 
 /**
  * The fullscreen era WORLD behind everything. Layers, bottom to top:
@@ -87,6 +88,25 @@ export function EraWorld() {
           transition={{ duration: reduced ? 0 : 1.15, ease: [0.32, 0.08, 0.18, 1] }}
           style={{ background: world.sky, willChange: "transform, opacity" }}
         >
+          {/* the era's photographic backdrop, dissolved into the sky.
+              A gentle blur + the grade above keep the small source images
+              atmospheric rather than pixelated, and keep text readable. */}
+          <div className="absolute inset-0 overflow-hidden">
+            <EraBackdrop
+              eraId={world.id}
+              className="scale-[1.06] opacity-60 blur-[2px]"
+            />
+            {/* seat the lower third so the coverflow + title sit on calm ground */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: world.dark
+                  ? "linear-gradient(to top, rgba(0,0,0,0.42), transparent 48%)"
+                  : "linear-gradient(to top, rgba(255,255,255,0.38), transparent 48%)",
+              }}
+            />
+          </div>
+
           {/* aurora lighting */}
           <motion.div className="absolute inset-0" style={{ x: cloudX, y: cloudY }}>
             {world.aurora.map((b, i) => (

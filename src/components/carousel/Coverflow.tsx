@@ -284,6 +284,23 @@ export function Coverflow({ albums, art, onSelect, active, onCenterChange }: Cov
             </div>
           ))}
         </div>
+
+        {/* One flat hit target over the centered cover. The 3D-rotated
+            neighbours can win browser hit-testing over the cover's edges,
+            so this guarantees a tap ANYWHERE on the center cover opens the
+            album — mouse and touch alike. Drags still bubble to the
+            container and are gated by dragDist like every other click. */}
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-hidden
+          className="absolute left-1/2 top-1/2 z-[300] aspect-square w-[min(46vw,250px)] cursor-pointer"
+          style={{ transform: "translate(-50%, -50%) scale(1.16)" }}
+          onClick={() => {
+            if (!activeRef.current || dragDist.current > 10) return;
+            onSelect(albums[currentRef.current === -1 ? 0 : currentRef.current]);
+          }}
+        />
       </div>
 
       {/* slim era timeline */}

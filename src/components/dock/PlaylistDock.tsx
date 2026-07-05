@@ -122,7 +122,7 @@ export function PlaylistDock() {
   if (trackIds.length === 0 && !dockOpen) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
+    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
       <AnimatePresence mode="wait">
         {!dockOpen ? (
           <motion.button
@@ -134,7 +134,7 @@ export function PlaylistDock() {
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             onClick={() => setDockOpen(true)}
             aria-label={`Open playlist — ${trackIds.length} songs`}
-            className="glass flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-ink shadow-xl transition hover:scale-[1.03]"
+            className="glass pointer-events-auto flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-ink shadow-xl transition hover:scale-[1.03]"
           >
             <span aria-hidden>💌</span>
             <span>
@@ -156,7 +156,7 @@ export function PlaylistDock() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 26 }}
-            className="glass w-full max-w-lg rounded-3xl p-5"
+            className="glass pointer-events-auto w-full max-w-lg rounded-3xl p-5"
             role="dialog"
             aria-label="Playlist builder"
           >
