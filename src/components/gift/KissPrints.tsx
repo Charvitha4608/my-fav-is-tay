@@ -16,7 +16,7 @@ interface Print {
 }
 
 /**
- * Scattered lipstick kiss prints behind the open letter's content — organic
+ * Scattered heart prints behind the open letter's content — organic
  * (varied rotation/scale, not a grid), low-opacity so the note and song
  * list stay readable, drifting gently unless reduced-motion is set. Seeded
  * after mount (random) so server/client markup always match.

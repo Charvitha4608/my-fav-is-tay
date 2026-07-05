@@ -16,7 +16,7 @@ import { KissPrints } from "./KissPrints";
 
 /**
  * The recipient's experience — an envelope-letter love note:
- *   sealed envelope, lips as the wax seal  →  (kiss to open)  →
+ *   sealed envelope, a heart as the wax seal  →  (kiss to open)  →
  *   flap swings open in 3D, a letter rises out and expands  →
  *   the full letter: songs up top, personal note + signature bottom-left,
  *   scattered kiss prints drifting behind it all.

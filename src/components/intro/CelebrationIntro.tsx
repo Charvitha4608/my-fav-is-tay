@@ -20,11 +20,18 @@ export function CelebrationIntro({ onCelebrate }: { onCelebrate: () => void }) {
       exit={{ opacity: 0 }}
       transition={{ duration: reduced ? 0.2 : 0.7, ease: "easeInOut" }}
     >
+      {/* blurred fill behind the photo so the uncropped image never leaves bare edges */}
       <img
         src="/intro/rainbow-nyc.jpg"
         alt=""
         aria-hidden
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-[42px] brightness-[0.96] saturate-[1.3]"
+      />
+      <img
+        src="/intro/rainbow-nyc.jpg"
+        alt=""
+        aria-hidden
+        className="absolute inset-0 h-full w-full object-contain"
       />
       <div
         aria-hidden
@@ -44,7 +51,7 @@ export function CelebrationIntro({ onCelebrate }: { onCelebrate: () => void }) {
           transition={{ duration: reduced ? 0.3 : 0.9, ease: [0.16, 1, 0.3, 1], delay: reduced ? 0 : 0.15 }}
           className="font-display max-w-3xl text-[clamp(1.9rem,6vw,3.75rem)] italic leading-[1.1] text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.55)]"
         >
-          Our best friend Taylor Swift is married 🥳
+          Our best friend Taylor Swift is married
         </motion.h1>
 
         <motion.button
@@ -58,7 +65,7 @@ export function CelebrationIntro({ onCelebrate }: { onCelebrate: () => void }) {
             background: "linear-gradient(100deg, #e75c9d 5%, #9d7bdd 50%, #d9a441 95%)",
           }}
         >
-          let&apos;s celebrate 🎉
+          let&apos;s celebrate
         </motion.button>
       </div>
     </motion.div>

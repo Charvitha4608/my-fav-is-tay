@@ -15,9 +15,6 @@ import { EraWorld } from "@/components/world/EraWorld";
 import { TaylorHero } from "@/components/world/TaylorHero";
 import { CelebrationIntro } from "@/components/intro/CelebrationIntro";
 
-const TAKEDOWN_EMAIL =
-  process.env.NEXT_PUBLIC_TAKEDOWN_EMAIL ?? "kyra18710@gmail.com";
-
 /**
  * The home experience: one fullscreen scene. The era world fills the
  * viewport (painted by <EraWorld/> in the root layout), giant Taylor
@@ -66,13 +63,7 @@ export function Home({ initialArt }: { initialArt: Record<string, string> }) {
           transition={{ duration: 0.5 }}
           className="absolute right-6 top-5 z-30 max-w-[46vw] text-right text-[9px] leading-snug text-ink-soft opacity-70"
         >
-          unofficial, non-commercial fan project ·{" "}
-          <a
-            className="pointer-events-auto underline decoration-dotted underline-offset-2"
-            href={`mailto:${TAKEDOWN_EMAIL}?subject=my%20fav%20is%20tay%20—%20takedown%20request`}
-          >
-            takedown requests honored
-          </a>
+          unofficial, non-commercial fan project
         </motion.p>
 
         {/* the stage: era title + cover flow pinned to the lower third */}
